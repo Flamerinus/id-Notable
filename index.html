@@ -7,32 +7,77 @@
   <!--<script language="javascript" src="libraries/p5.sound.js"></script>-->
   <script language="javascript" type="text/javascript" src="sketch-a+b2.js"></script>
   <!-- this line removes any default padding and style. you might only need one of these values set. -->
-  	<style> body {padding: 0; margin: 0; background-color:rgb(110,110,110);}
-		#rangeA { text-align: left; }
-		#rangeB { text-align:right; }
-		table { width: 480;
-				background-color:darkturquoise;}
-		#sliders {
-			display:flex;
-			justify-content: center;}
+  	<style> body {padding: 0; margin: 0;}
+    #toptable, #tablebot{width: 800px; background-color: #e34a06;}
+    #tablebot{width: 800px; background-color: #e34a06; font-size: 200%}
+    #toptable2{background-color: #999683; font-size: 200%}
+    #row2, #top{text-align: center; background-color: #999683; font-size: 200%}
+    #row1{text-align: center; background-color: #e34a06; color: #f9bd03}
+    #centro { background-color: #999683; text-align: center;}
+		#sliders,#top{background-color: #e34a06;
+      display: flex; justify-content: center;}
+    #top2, #divbot1 {background-color: #999683;
+      display: flex; justify-content: center;}
+    #rangeb, #rangea{text-align: center;}
+    #script{text-align: left;}
+    #language{text-align: right;}
+    #A, #B{width: 300px}
 
-	</style>
+    </style>
 </head>
 
 <body>
+  <div id="top">
+    <table id="toptable">
+      <tr>
+        <td id="script">
+          <button type="button" id="a+b" onclick="initial(1);">(A+B)<sup>2</sup></button>
+          <button type="button" id="a-b" onclick="initial(2);">(A-B)<sup>2</sup></button>
+        </td>
+        <td id="language">
+          <button type="button" id="esp" onclick="goesp()">Español</button>
+          <button type="button" id="eng" onclick="goeng()">English</button>
+        </td>
+      </tr>
+    </table>
+  </div>
+  <div id="top2">
+    <table id="toptable2">
+      <tr id="descript">
+        <!-- This will be filled with a different HTML depending on the script the user chooses, and the corresponding ecuation -->
+      </tr>
+    </table>
+  </div>
 
-	<div align="center" id="centro">
-
+	<div id="centro">
 	</div>
-	<div id ="sliders">
-	<table>
+  <div id="divbot1">
+    <table>
+      <tr id="row2">
+        <td colspan="2">
+          (A + B)<sup>2</sup> = (A + B)<sup>2</sup> = 23<sup>2</sup> = 529
+        </td>
+      </tr>
+
+    </table>
+  </div>
+  <div id ="sliders">
+	<table id="tablebot">
+    <tr id="row1">
+      <td id="a">
+        caca1
+      </td>
+      <td id="b">
+        caca2
+      </td>
+    </tr>
 			<tr>
-			<td id="rangeA">
-			A <input type="range" id="A" min="10" max="20" value="15">
-			</td>
-			<td id="rangeB">
-			B <input type="range" id="B" min="6" max="10" value="8">
-			</td>
+			  <td id="rangeA">
+			  10 <input type="range" id="A" min="10" max="20" value="15">20
+			  </td>
+			  <td id="rangeB">
+			  6 <input type="range" id="B" min="6" max="15" value="11">15
+			  </td>
 			</tr>
 		</table>
 	</div>

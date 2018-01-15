@@ -1,133 +1,240 @@
+"use strict"
 function setup() {
-	frameRate(30);
-	var canvas = createCanvas(480, 480);
+	frameRate(10);
+	var canvas = createCanvas(canvwidth, canvheight);
 	canvas.parent("centro");
-	
-}
+	abcol=color("#407026");
+	botabcol=color("#f9bd03");
+	a2col=color("#e34a06");
+	b2col=color("#31cce8");
+	atopcol=color("#f9bd03");
+	aleftcol=color("#407026");
+  btopcol=color("#e34a06");
+  bleftcol=color("#31cce8");
+	initial(1);
+  }
 
 function draw() {
-	background(110, 110, 110);
+	background("#999683");
 	amasb2();
-	letras();
-	
-
 
 }
+const canvwidth = 800;
+const canvheight = 415;
+var a;
+var b;
+var aplus;
+var bplus;
+var aplusb;
+var aminusb;
+var x;
+var y;
+var resultaplusb;
+var resultaminusb;
+var script;
+var descriptaplusb2 = `<td>
+(A + B)<sup>2</sup> = (<span style="color:#f9bd03">A</span> + <span style="color:#e34a06">B</span>) x (<span style="color:#407026">A</span> + <span style="color:#31cce8">B</span>) =
+</td>
+<td style="background-color:#e34a06">
+A<sup>2</sup>
+</td>
+<td>
++
+</td>
+<td style="background-color:#407026">
+2AB
+</td>
+<td>
+	+
+</td>
+<td style="background-color:#31cce8">
+B<sup>2</sup>
+</td>`;
+var descriptaminusb2 = `<td>
+(A - B)<sup>2</sup> = (<span style="color:#f9bd03">A</span> - <span style="color:#e34a06">B</span>) x (<span style="color:#407026">A</span> - <span style="color:#31cce8">B</span>) =
+</td>
+<td>
+<span style="color:#e34a06">A<sup>2</sup></span>
+</td>
+<td>
+ -
+</td>
+<td style="background-color:#407026">
+2AB
+</td>
+<td>
+ +
+</td>
+<td style="background-color:#31cce8">
+B<sup>2</sup>
+</td>`;
+var abcol="", a2col="", b2col="", botabcol="", atopcol="", aleftcol="", btopcol="", bleftcol="";
 
-var a = 1;
-var b = 1;
-var aplus= 1;
-var x = 90;
-var y = 75;
-var result = 1;
-function amasb2() {
-	
-	b = document.getElementById("B").value * 10;
-	a = document.getElementById("A").value * 10;
-	aplus = Number(a) + x;
-	bplus = Number(a) + y;
-	result = (a * a)/100 + (2 * a * b)/100 + (b * b)/100;
-	fill(200, 0, 0);
-	rect(x, y, a, a);
-	rect(x + 210, 15, 30, 30);
-	fill(0, 200, 0);
-	rect(aplus, y, b, a);
-	rect(x + 250, 15, 50, 30);
-	rect(x, bplus, a, b);
-	fill(0, 50, 222);
-	rect(x + 313, 15, 30, 30);
-	rect(aplus, bplus, b, b);
-	
-	fill(200, 200, 0);
-	
-	if(b/10 <10) {
-	   rect(x + 305, 405, 40, 30)
-	   	
-	} else {
-		rect(x + 315, 405, 40, 30)
+/*function that does things once, in setup(), so that they don't have to be
+innecesarily rendered or calculated every frame, for no reason.*/
+function initial(s){
+		script=s;
+		switch (s){
+		case 1:
+			document.getElementById("descript").innerHTML = descriptaplusb2;
+			document.getElementById("rangeA").innerHTML = `10 <input type="range" id="A" min="10" max="20" value="15">20`;
+			document.getElementById("rangeB").innerHTML = `6 <input type="range" id="B" min="6" max="15" value="11">15`;
+			break;
+		case 2:
+			document.getElementById("descript").innerHTML = descriptaminusb2;
+			document.getElementById("rangeA").innerHTML = `25 <input type="range" id="A" min="25" max="35" value="30">35`;
+			document.getElementById("rangeB").innerHTML = `6 <input type="range" id="B" min="6" max="10" value="8">10`;
+			break;
 	}
 }
+function amasb2() {
+	b = document.getElementById("B").value * 10;
+	a = document.getElementById("A").value * 10;
+	aplusb = (a+b)/10;
+	aminusb = (a-b)/10;
 
-function letras() {
-	
-	fill(0);
-	textAlign(CENTER);
-	//Letras grandes interiores
-	textSize(40);
-	text("A", x + a / 2, y + a / 2);
-	textSize(20);
-	text("2", x + 15 + a / 2, y - 15 + a / 2);
-	
-	textSize(40);
-	text("B", aplus + b / 2, 15 + bplus + b / 2);
-	textSize(20);
-	text("2", 15 + aplus + b / 2, bplus + b / 2);
-	
-	textSize(40);
-	text("AB", aplus + b / 2, y + a / 2);
-	textSize(40);
-	text("AB", x + a / 2, 15 + bplus + b / 2);
-	
-	//Valores de a y b
-	textSize(20);
-	fill(0, 206, 209);
-	text("A= " + a / 10, 30, 470);
-	text("B= " + b / 10, 450, 470);
-	
-	//Letras pequeñas exteriores
-	textSize(20);
-	fill(200, 200, 0);
-	text("A", x + a / 2, y - 2);
-	fill(0, 200, 0);
-	text("A", x - 10, y + a / 2);
-	fill(0);
-	text("A", x + a / 2, bplus + b / 1 + 20);
-	text("A", aplus + b / 1 + 10, y + a / 2);
-	
-	
-	text("B", aplus + b / 1 + 10, bplus + b / 2 + 10);
-	fill(0, 0, 200);
-	text("B", x - 10, bplus + b / 2 + 10);
-	fill(200, 0, 0);
-	text("B", aplus + b / 2, y - 2);
-	fill(0);
-	text("B", aplus + b / 2, bplus + b / 1 + 20);
-	
-	//Ecuacion
-	textAlign(LEFT);
-	textSize(20);
-	text("(A+B) = (  +  ) x (  +  ) = (A + 2AB + B )", x, 40);
-	//parte de abajo
-	text("(A + 2AB + B ) = " + a/10 * a/10 +  " + " + 2* a/10 * b/10 + " + " + b/10 * b/10 + " = " + result, x, 430);
-	
-	text("(A + B) = " + Number(a/10 + b/10), x + 50, 470);
-	text(Number(a/10 + b/10) + " = " + Number(a/10 + b/10) * Number(a/10 + b/10) , x + 220, 470);
-	fill(200, 200, 0);
-	text("===>", x + 165, 470);
-	
-	
-	fill(200, 200, 0);
-	text("A",x + 80, 40);
-	fill(200, 0, 0);
-	text("B",x + 103, 40);
-	
-	fill(0, 200, 0);
-	text("A",x + 149, 40);
-	fill(0, 0, 200);
-	text("B",x + 172, 40);
-	
-	fill(0);
-	textSize(12);
-	text("2",x +51, 27);
-	text("2", x + 230, 27);
-	text("2", x + 329, 27);
-	
-	//parte de abajo
-	text("2", x + 17, 417);
-	text("2", x + 116, 417);
-	
-	text("2", x + 242, 457);
-	
-	
-	
+	switch(script){
+		case 1:
+			resultaplusb = ((a * a) + (2 * a * b) + (b * b))/100;
+			document.getElementById("row2").innerHTML = "(A + B)<sup>2</sup> = (" + a/10 + " + " + b/10 + ")<sup>2</sup> = " + aplusb + "<sup>2</sup> = " + 	resultaplusb;
+			x = (canvwidth - (a + b))/2;
+			y = (canvheight - (a + b))/2;
+			aplus = a + x;
+			bplus = a + y;
+			//The rectangles for (a+b)^2
+			stroke(0);
+			strokeWeight(3);
+			fill(a2col);
+			rect(x, y, a, a);
+			fill(abcol);
+			rect(aplus, y, b, a);
+			rect(x, bplus, a, b);
+			fill(b2col);
+			rect(aplus, bplus, b, b);
+			//Chars for (a+b)^2
+			fill(0);
+			noStroke();
+			textAlign(CENTER, CENTER);
+			//Big interior characters
+			textSize(40);
+			text("A", x + a / 2, y + a / 2);
+			textSize(20);
+			text("2", x + 15 + a / 2, y - 15 + a / 2);
+
+			textSize(40);
+			text("B", aplus + b / 2, bplus + b / 2);
+			textSize(20);
+			text("2", 15 + aplus + b / 2, bplus + b / 2 - 15);
+
+			textSize(40);
+			text("AB", aplus + b / 2, y + a / 2);
+			textSize(40);
+			text("AB", x + a / 2, bplus + b / 2);
+
+				//Smaller outer characters
+			textSize(25);
+		  //top A and B
+			textAlign(CENTER, BOTTOM);
+			fill(btopcol);
+			text("B", aplus + b / 2, y);
+			fill(atopcol);
+			text("A", x + a / 2, y);
+			//Left A and B
+			textAlign(RIGHT, CENTER);
+			fill(aleftcol);
+			text("A", x-3, y + a / 2);
+			fill(bleftcol);
+			text("B", x-3, bplus + b / 2);
+
+			fill(0);
+			//Bottom A and B
+			textAlign(CENTER, TOP);
+			text("A", x + a / 2, bplus + b / 1);
+			text("B", aplus + b / 2, bplus + b / 1);
+
+			//Right A and B
+			textAlign(LEFT, CENTER);
+			text("A", aplus + b / 1 + 3, y + a / 2);
+			text("B", aplus + b / 1 + 3, bplus + b / 2);
+			break;
+		case 2:
+			resultaminusb = ((a * a) - (2 * a * b) + (b * b))/100;
+			document.getElementById("row2").innerHTML = "(A - B)<sup>2</sup> = (" + a/10 + " - " + b/10 + ")<sup>2</sup> = " + aminusb + "<sup>2</sup> = " + 	resultaminusb;
+			x = (canvwidth - a)/2;
+			y = (canvheight - a)/2;
+			aplus = a + x;
+			bplus = a + y;
+			//The rectangles for (a-b)^2
+			stroke(0);
+			strokeWeight(2);
+
+			line(x,y+2, aplus-b,y+2);
+			line(x+2 ,y+2, x+2,bplus);
+
+			fill(abcol);
+			rect(aplus-b, y, b, a);
+			rect(x, bplus-b, a, b);
+			fill(b2col);
+			rect(aplus-b, bplus-b, b, b);
+			stroke(a2col);
+			strokeWeight(4);
+			noFill();
+			rect(x, y, a, a);
+			//Chars for (a-b)^2
+			fill(a2col);
+			noStroke();
+			textAlign(CENTER, CENTER);
+			//Big interior characters
+			textSize(40);
+			text("A", x + a / 2, y + a / 2);
+			textSize(20);
+			text("2", x + 15 + a / 2, y - 15 + a / 2);
+
+			fill(0);
+			textSize(40);
+			text("B", aplus - b / 2, bplus - b / 2);
+			textSize(20);
+			text("2", 15 + aplus - b / 2, bplus - b / 2 - 15);
+
+			textSize(40);
+			text("AB", aplus - b / 2, y + (a-b) / 2);
+			textSize(40);
+			text("AB", x + (a-b) / 2, bplus - b / 2);
+
+				//Smaller outer characters
+			textSize(25);
+		  //top A and B
+			textAlign(CENTER, TOP);
+			fill(btopcol);
+			text("B", aplus - b / 2, y);
+
+			textAlign(CENTER, BOTTOM);
+			fill(atopcol);
+			text("A", x + a / 2, y);
+			//Left A and B
+			textAlign(RIGHT, CENTER);
+			fill(aleftcol);
+			text("A", x-3, y + a / 2);
+			textAlign(LEFT, CENTER);
+			fill(bleftcol);
+			text("B", x + 3, bplus - b / 2);
+
+			fill(0);
+			textAlign(CENTER, TOP);
+			//Top aminusb
+			text("A - B = " + aminusb, x + (a-b) / 2, y);
+			//Bottom B
+			text("B", aplus - b / 2, bplus );
+			//Right B
+			textAlign(LEFT, CENTER);
+			text("B", aplus + 3, bplus - b / 2);
+			//Left inner 22
+			text(aminusb, x + 3, y + (a-b) / 2);
+
+			break;
+  }
+	document.getElementById("a").innerHTML = "A = " + a/10;
+	document.getElementById("b").innerHTML = "B = " + b/10;
+	//line(x,bplus+b/2, aplus+b,bplus+b/2);
+
 }
